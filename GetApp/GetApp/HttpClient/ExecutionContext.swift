@@ -29,7 +29,7 @@ class LocalExecutionContext: ExecutionContext {
         var headers = HTTPHeaders()
         
         for name in request.getHeaderNames() {
-            headers.add(name: name, value: request.getHeader(name: name))
+            headers[name] = request.getHeader(name: name)
         }
         
         return headers
@@ -51,7 +51,7 @@ class LocalExecutionContext: ExecutionContext {
     }
     
     func run(request: Request, callback: @escaping ExecutionCallback) {
-        AF.request(
+        Alamofire.request(
             request.getUri(),
             method: HTTPMethod(rawValue: request.getMethod())!,
             parameters: self.getParameters(request: request),
@@ -65,7 +65,7 @@ class LocalExecutionContext: ExecutionContext {
                 }
                 else {
                     let httpResponse = response.response!
-                    let headers = httpResponse.headers.dictionary
+                    let headers = httpResponse.allHeaderFields as! StringMap
                     let response = Response(
                         uri: request.getUri(),
                         responseCode: httpResponse.statusCode,

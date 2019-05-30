@@ -25,6 +25,8 @@ class LocalExecutionContext: ExecutionContext {
         "OPTIONS": false,
     ]
     
+    var encoding: ParameterEncoding = URLEncoding.default
+    
     private func getHeaders(request: Request) -> HTTPHeaders {
         var headers = HTTPHeaders()
         
@@ -56,7 +58,7 @@ class LocalExecutionContext: ExecutionContext {
             method: HTTPMethod(rawValue: request.getMethod())!,
             parameters: self.getParameters(request: request),
             headers: self.getHeaders(request: request)
-            ).responseString(completionHandler: { (response: DataResponse<String>) in
+            ).response(completionHandler: { (response: DefaultDataResponse) in
                 let result: ExecutionResult
                 
                 if let error = response.error {
@@ -64,12 +66,18 @@ class LocalExecutionContext: ExecutionContext {
                     result.message = error.localizedDescription
                 }
                 else {
+                    var value = ""
+                    
+                    if let data = response.data {
+                        value = String(decoding: data, as: UTF8.self)
+                    }
+                    
                     let httpResponse = response.response!
                     let headers = httpResponse.allHeaderFields as! StringMap
                     let response = Response(
                         uri: request.getUri(),
                         responseCode: httpResponse.statusCode,
-                        body: response.value!
+                        body: value
                     )
                     
                     let names = Array(headers.keys)

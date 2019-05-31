@@ -21,33 +21,38 @@ class NewRequestViewController: UIViewController, UIPickerViewDataSource, UIPick
     @IBOutlet weak var request_key_3: UITextField!
     @IBOutlet weak var request_value_3: UITextField!
     
+    @IBOutlet weak var parametersEncodingType: UITextField!
     
     @IBOutlet weak var header_key_1: UITextField!
     @IBOutlet weak var header_value_1: UITextField!
     @IBOutlet weak var header_key_2: UITextField!
     @IBOutlet weak var header_value_2: UITextField!
     
-    @IBOutlet weak var contentField: UITextView!
-    @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var sendRequestButton: UIButton!
+    @IBOutlet weak var responseTextView: UITextView!
     
     let requestTypes = ["GET", "POST", "PUT", "DELETE"]
+    let parametersEncodingDisplayed = ["json", "form-urlencoded"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        contentLabel.isHidden = true
-        contentField.isHidden = true
-        
-        contentField.layer.cornerRadius = 5
-        contentField.layer.masksToBounds = true
+        parametersEncodingType.isHidden = true
         
         sendRequestButton.layer.cornerRadius = 5
+        responseTextView.layer.cornerRadius = 5
         
-        let pickerView = UIPickerView()
-        pickerView.delegate = self
+        let requestTypePickerView = UIPickerView()
+        requestTypePickerView.tag = 1
+        requestTypePickerView.delegate = self
         
-        requestType.inputView = pickerView
+        requestType.inputView = requestTypePickerView
+        
+        let parametersPicker = UIPickerView()
+        parametersPicker.tag = 2
+        parametersPicker.delegate = self
+        
+        parametersEncodingType.inputView = parametersPicker
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -55,23 +60,34 @@ class NewRequestViewController: UIViewController, UIPickerViewDataSource, UIPick
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return requestTypes.count
+        if pickerView.tag == 1 {
+            return requestTypes.count
+        } else {
+            return parametersEncodingDisplayed.count
+        }
+        
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return requestTypes[row]
+        if pickerView.tag == 1 {
+            return requestTypes[row]
+        } else {
+            return parametersEncodingDisplayed[row]
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        requestType.text = requestTypes[row]
+        if pickerView.tag == 1 {
+            requestType.text = requestTypes[row]
         
-        if (requestType.text == "POST") {
-            contentLabel.isHidden = false
-            contentField.isHidden = false
-        }
-        else {
-            contentLabel.isHidden = true
-            contentField.isHidden = true
+            if (requestType.text == "POST") {
+                parametersEncodingType.isHidden = false
+            }
+            else {
+                parametersEncodingType.isHidden = true
+            }
+        } else {
+            parametersEncodingType.text = parametersEncodingDisplayed[row]
         }
     }
     
@@ -84,9 +100,9 @@ class NewRequestViewController: UIViewController, UIPickerViewDataSource, UIPick
         
         let request = Request(uri: url, method: requestType.text!)
         
-        if (request_key_1.text! != "") { request.setHeader(name: request_key_1.text!, value: request_value_1.text!) }
-        if (request_key_2.text! != "") { request.setHeader(name: request_key_2.text!, value: request_value_2.text!) }
-        if (request_key_3.text! != "") { request.setHeader(name: request_key_3.text!, value: request_value_2.text!) }
+        if (request_key_1.text! != "") { request.setParameter(name: request_key_1.text!, value: request_value_1.text!) }
+        if (request_key_2.text! != "") { request.setParameter(name: request_key_2.text!, value: request_value_2.text!) }
+        if (request_key_3.text! != "") { request.setParameter(name: request_key_3.text!, value: request_value_3.text!) }
         
         if (header_key_1.text! != "") { request.setHeader(name: header_key_1.text!, value: header_value_1.text!) }
         if (header_key_2.text! != "") { request.setHeader(name: header_key_2.text!, value: header_value_2.text!) }
@@ -118,7 +134,8 @@ class NewRequestViewController: UIViewController, UIPickerViewDataSource, UIPick
         
         addDataToHistory(response: response)
         
-        self.showMessage(title: "Your request responce:", message: message)
+        responseTextView.text = message;
+        //self.showMessage(title: "Your request responce:", message: message)
     }
     
     func showMessage(title: String, message: String) {

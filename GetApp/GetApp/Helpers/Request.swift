@@ -8,11 +8,12 @@
 
 typealias StringMap = Dictionary<String,String>
 
-class Request {
+class Request: Codable {
     private let uri: String
     private let method: String
     private var headers = StringMap()
     private var parameters = StringMap()
+    var encoding = "urlencoded"
     
     init(uri: String, method: String) {
         self.uri = uri

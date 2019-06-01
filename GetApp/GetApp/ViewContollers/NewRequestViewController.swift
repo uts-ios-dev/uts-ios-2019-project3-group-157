@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import Alamofire
 
 class NewRequestViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
@@ -32,7 +33,8 @@ class NewRequestViewController: UIViewController, UIPickerViewDataSource, UIPick
     @IBOutlet weak var responseTextView: UITextView!
     
     let requestTypes = ["GET", "POST", "PUT", "DELETE"]
-    let parametersEncodingDisplayed = ["json", "form-urlencoded"]
+    let contentRequestTypes = ["POST", "PUT"]
+    let parametersEncodingDisplayed = ["json", "urlencoded"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,10 +109,15 @@ class NewRequestViewController: UIViewController, UIPickerViewDataSource, UIPick
         if (header_key_1.text! != "") { request.setHeader(name: header_key_1.text!, value: header_value_1.text!) }
         if (header_key_2.text! != "") { request.setHeader(name: header_key_2.text!, value: header_value_2.text!) }
         
-        // TODO: assign json content
-        //if (contentField.text! != "")
-        
         let ctx = LocalExecutionContext()
+        
+        let encodingType = parametersEncodingType.text!
+        let requestEncodable = contentRequestTypes.contains(requestType.text!)
+        
+        if requestEncodable && encodingType == "json" {
+            ctx.encoding = JSONEncoding.default
+            request.encoding="json"
+        }
         
         ctx.run(request: request, callback: self.requestCallback)
     }

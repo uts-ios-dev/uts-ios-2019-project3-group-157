@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Response {
+class Response: Codable {
     private let uri: String
     private let responseCode: Int
     private var body: String

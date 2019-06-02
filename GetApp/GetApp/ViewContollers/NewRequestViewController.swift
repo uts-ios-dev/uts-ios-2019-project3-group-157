@@ -109,23 +109,29 @@ class NewRequestViewController: UIViewController, UIPickerViewDataSource, UIPick
         if (header_key_1.text! != "") { request.setHeader(name: header_key_1.text!, value: header_value_1.text!) }
         if (header_key_2.text! != "") { request.setHeader(name: header_key_2.text!, value: header_value_2.text!) }
         
-        let ctx = LocalExecutionContext()
+        let ctx = getContext()
         
         let encodingType = parametersEncodingType.text!
         let requestEncodable = contentRequestTypes.contains(requestType.text!)
         
         if requestEncodable && encodingType == "json" {
-            ctx.encoding = JSONEncoding.default
+            if let localCtx = ctx as? LocalExecutionContext {
+                localCtx.encoding = JSONEncoding.default
+            }
             request.encoding="json"
         }
         
         ctx.run(request: request, callback: self.requestCallback)
     }
     
+    func getContext() -> ExecutionContext {
+        return RemoteExecutionContext()
+    }
+    
     func requestCallback(result: ExecutionResult) {
         
         guard let response = result.response else {
-            showMessage(title: "Error", message: "Error has occure while parcing the responce. Check your request parameters.")
+            showMessage(title: "Error", message: "Error has occured while parsing the responce. Check your request parameters.")
             return
         }
         

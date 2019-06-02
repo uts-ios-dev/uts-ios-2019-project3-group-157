@@ -16,7 +16,7 @@ extension Data: ParameterEncoding {
     }
 }
 
-let PROXY_API_URL = "https://api.jacobtaylor.id.au/util/request_proxy"
+let PROXY_API_URL = "https://utils.jacobtaylor.id.au/default/requestProxy"
 
 class RemoteExecutionContext: ExecutionContext {
     private func getHeaders(request: Request) -> HTTPHeaders {
@@ -49,11 +49,11 @@ class RemoteExecutionContext: ExecutionContext {
             let encoder = JSONEncoder()
             let data = try encoder.encode(request)
             Alamofire.request(
-                request.getUri(),
-                method: HTTPMethod(rawValue: request.getMethod())!,
+                PROXY_API_URL,
+                method: HTTPMethod.post,
                 parameters: [:],
                 encoding: data,
-                headers: self.getHeaders(request: request)
+                headers: ["Content-type":"application/json"]
                 ).response(completionHandler: { (response: DefaultDataResponse) in
                     let result: ExecutionResult
                     

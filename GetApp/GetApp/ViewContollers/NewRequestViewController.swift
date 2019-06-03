@@ -32,6 +32,8 @@ class NewRequestViewController: UIViewController, UIPickerViewDataSource, UIPick
     @IBOutlet weak var sendRequestButton: UIButton!
     @IBOutlet weak var responseTextView: UITextView!
     
+    @IBOutlet weak var cloudProxySwitch: UISwitch!
+    
     let requestTypes = ["GET", "POST", "PUT", "DELETE"]
     let contentRequestTypes = ["POST", "PUT"]
     let parametersEncodingDisplayed = ["json", "urlencoded"]
@@ -125,7 +127,10 @@ class NewRequestViewController: UIViewController, UIPickerViewDataSource, UIPick
     }
     
     func getContext() -> ExecutionContext {
-        return RemoteExecutionContext()
+        if cloudProxySwitch.isOn {
+            return RemoteExecutionContext()
+        }
+        return LocalExecutionContext()
     }
     
     func requestCallback(result: ExecutionResult) {

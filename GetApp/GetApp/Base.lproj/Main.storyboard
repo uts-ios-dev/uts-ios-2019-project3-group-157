@@ -231,12 +231,24 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="5mT-t5-ZxK">
+                                <rect key="frame" x="331" y="97" width="49" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="CloudProxy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F8X-om-3UV">
+                                <rect key="frame" x="235" y="102" width="88" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="kxu-dP-pem"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="New Request" image="request" id="FGd-8M-CGn"/>
                     <connections>
+                        <outlet property="cloudProxySwitch" destination="5mT-t5-ZxK" id="jXA-9Y-eQb"/>
                         <outlet property="header_key_1" destination="YRp-Jq-uEh" id="PK4-Nm-Nfk"/>
                         <outlet property="header_key_2" destination="W1D-2Q-KEo" id="SD1-aE-Dhp"/>
                         <outlet property="header_value_1" destination="8Km-yk-zq2" id="N5n-pi-RJ3"/>

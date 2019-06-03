@@ -168,12 +168,12 @@ class NewRequestViewController: UIViewController, UIPickerViewDataSource, UIPick
         let uid = NSUUID().uuidString
         let uri = response.getUri()
         let code = String(response.getResponseCode())
-        let body = response.getBody()
-        let dictionaryValue = [uri, code, body]
-        
+        let rqType = requestType.text
+        //let dictionaryValue = [uri, code, rqType]
+        let dictionaryValue="URL:- " + uri + "  " + "Request Code:- " + code + "  " + "Request Type:-" + rqType!
         let existingRequests = storedDefaults.dictionary(forKey: "requests")
-        var requestsDictionary = existingRequests as? Dictionary<String, Array<String>> ?? Dictionary<String, Array<String>>()
-        requestsDictionary[uid] = dictionaryValue
+        var requestsDictionary = existingRequests as? Dictionary<String, String> ?? Dictionary<String, String>()
+        requestsDictionary[uid] = dictionaryValue as String
         
         storedDefaults.set(requestsDictionary, forKey: "requests")
     }

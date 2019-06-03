@@ -1,26 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="h9M-lK-K3v">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="h9M-lK-K3v">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--History View Controller-->
         <scene sceneID="ecf-uY-ro3">
             <objects>
-                <viewController id="fHC-UM-8Kb" sceneMemberID="viewController">
+                <viewController id="fHC-UM-8Kb" customClass="HistoryViewController" customModule="GetApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7bL-Fz-SCS">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zkj-XZ-2DL">
+                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="HistoryCell" id="pJ1-q5-A3d" customClass="HistoryCell" customModule="GetApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pJ1-q5-A3d" id="CUq-4l-Y9M">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="49.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="eD8-QJ-M2Y">
+                                                    <rect key="frame" x="12" y="32.5" width="390" height="25"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="25" id="e5j-0k-xKX"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="eD8-QJ-M2Y" secondAttribute="trailing" constant="12" id="YXo-Nc-JVZ"/>
+                                                <constraint firstItem="eD8-QJ-M2Y" firstAttribute="leading" secondItem="CUq-4l-Y9M" secondAttribute="leading" constant="12" id="bpa-NZ-w7k"/>
+                                                <constraint firstItem="eD8-QJ-M2Y" firstAttribute="centerY" secondItem="CUq-4l-Y9M" secondAttribute="centerY" id="gdc-hT-xeu"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="historyLabel" destination="eD8-QJ-M2Y" id="e5H-4m-Va4"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="fHC-UM-8Kb" id="oP4-6z-KEW"/>
+                                    <outlet property="delegate" destination="fHC-UM-8Kb" id="5Uo-Ay-8kg"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="zkj-XZ-2DL" firstAttribute="leading" secondItem="5Td-Ay-E3h" secondAttribute="leading" id="K4N-RQ-J0v"/>
+                            <constraint firstItem="5Td-Ay-E3h" firstAttribute="bottom" secondItem="zkj-XZ-2DL" secondAttribute="bottom" id="lPJ-H4-QQZ"/>
+                            <constraint firstItem="5Td-Ay-E3h" firstAttribute="trailing" secondItem="zkj-XZ-2DL" secondAttribute="trailing" id="mfb-hv-nq0"/>
+                            <constraint firstItem="zkj-XZ-2DL" firstAttribute="top" secondItem="5Td-Ay-E3h" secondAttribute="top" id="xlu-Vz-BKF"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="5Td-Ay-E3h"/>
                     </view>
                     <tabBarItem key="tabBarItem" systemItem="history" id="Hi5-hb-Red"/>
+                    <connections>
+                        <outlet property="tableView" destination="zkj-XZ-2DL" id="1u7-jY-ozZ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kZe-aV-7Au" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
